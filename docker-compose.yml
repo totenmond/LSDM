@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: ./api-folder
+      dockerfile: Dockerfile
+    expose:
+      - "8081"
+    ports:
+      - "8081:8081"
+    # links:
+    #   - web-interface:web-interface #ensures that the web app can send features
+
+    # volumes:
+    #   - ./api-folder:/api # from:to (from api folder outside of a container to docker-container/code)
+
+  web-interface:
+    build:
+      context: ./web-app
+      dockerfile: Dockerfile
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    # depends_on: 
+    #   - api
+    links:
+      - api:api
+    # volumes:
+    #   - ./web-app:/app
